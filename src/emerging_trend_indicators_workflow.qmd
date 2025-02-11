@@ -351,7 +351,7 @@ Please go to [`./data/output/GAM_outputs`](https://github.com/b-cubed-eu/eurorac
 
 ### Standard plots
 
-In this section we show the plots as returned by `apply_gam()`. Plot titles could be quite long. Folder: [`./data/output/GAM_outputs/long_titles`](https://github.com/b-cubed-eu/raccoon/tree/main/data/output/GAM_outputs).
+In this section we show the plots as returned by `apply_gam()`. Plot titles could be quite long. Folder: [`./data/output/GAM_outputs/long_titles`](https://github.com/b-cubed-eu/euroraccoon/tree/main/data/output/GAM_outputs/long_titles).
 
 #### Occurrences
 
@@ -373,7 +373,7 @@ purrr::walk(gam_ncells, function(country) {
 
 ### Short titles
 
-We show and save plots with the species only as title. We save them in sub folder [`./data/output/GAM_outputs/short_title`](https://github.com/b-cubed-eu/raccoon/tree/main/data/output/GAM_outputs/short_title).
+We show and save plots with the species only as title. We save them in sub folder [`./data/output/GAM_outputs/short_title`](https://github.com/b-cubed-eu/euroraccoon/tree/main/data/output/GAM_outputs/short_title).
 
 #### Occurrences
 
@@ -425,7 +425,7 @@ purrr::iwalk(gam_ncells, function(x, country) {
 
 ### Grid
 
-For each country, we can show the plots of the number of occurrences and the measured occupancy next to each other. We use the full country name. Plots are saved in subfolder [`./data/output/GAM_outputs/plots_for_countries`](https://github.com/b-cubed-eu/raccoon/tree/main/data/output/GAM_outputs/plots_for_countries).
+For each country, we can show the plots of the number of occurrences and the measured occupancy next to each other. We use the full country name. Plots are saved in subfolder [`./data/output/GAM_outputs/plots_for_countries`](https://github.com/b-cubed-eu/euroraccoon/tree/main/data/output/GAM_outputs/plots_for_countries).
 
 ```{r grid_per_country}
 # Transform gam_occs and gam_ncells into a list of lists 
