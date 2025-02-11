@@ -105,31 +105,30 @@ Remove countries not completely covered by the EEA grid:
 
 -   Ukraine (`UA`)
 -   Russia (`RU`)
+-   Azerbaijan (`AZ`)
 
 ```{r remove-ua-ru}
 cube <- cube |>
-  dplyr::filter(!countrycode %in% c("UA", "RU"))
+  dplyr::filter(!countrycode %in% c("UA", "RU", "AZ"))
 ```
 
-Extract countries:
+Are there rows without an EEA cell code?
 
-```{r extract-countries}
-countrycode <- cube |>
-  dplyr::distinct(countrycode) |>
-  dplyr::pull(countrycode)
-countrycode
+```{r are_there_nas_cellcode}
+cube |>
+  dplyr::filter(is.na(eeacellcode))
 ```
 
-Remove rows not associated with an EEA cell code (countries: Azerbaijan, Georgia, Russia):
+We remove them:
 
-```{r remove_nas}
+```{r remove_nas_cellcode}
 cube <- cube |>
   dplyr::filter(!is.na(eeacellcode))
 ```
 
-Countries with at least one occurrence:
+Extract countries:
 
-```{r countries}
+```{r extract_countries}
 countrycode <- cube |>
   dplyr::distinct(countrycode) |>
   dplyr::pull(countrycode)
