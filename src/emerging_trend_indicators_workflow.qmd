@@ -1,5 +1,5 @@
 ---
-title: "Emerging trend indicators of raccoon and other species in Europe"
+title: "Emerging trend indicators of raccoon in Europe"
 editor: visual
 project:
   type: website
@@ -337,11 +337,11 @@ names(gam_ncells) <- countrycode
 
 ## Plots
 
-Please go to [`./data/output/GAM_outputs`](https://github.com/damianooldoni/euroraccoon-prototype/tree/main/data/output/GAM_outputs) to download the plots shown in this section.
+Please go to [`./data/output/GAM_outputs`](https://github.com/b-cubed-eu/euroraccoon/tree/main/data/output/GAM_outputs) to download the plots shown in this section.
 
 ### Standard plots
 
-In this section we show the plots as returned by `apply_gam()`. Folder: [`./data/output/GAM_outputs`](https://github.com/damianooldoni/euroraccoon-prototype/tree/main/data/output/GAM_outputs).
+In this section we show the plots as returned by `apply_gam()`. Folder: [`./data/output/GAM_outputs`](https://github.com/b-cubed-eu/raccoon/tree/main/data/output/GAM_outputs).
 
 #### Occurrences
 
@@ -352,7 +352,7 @@ purrr::walk(gam_occs, function(country) {
 )
 ```
 
-#### Occupancy
+#### Measured occupancy
 
 ```{r n_cells-plots}
 purrr::walk(gam_ncells, function(country) {
@@ -363,7 +363,7 @@ purrr::walk(gam_ncells, function(country) {
 
 ### Short titles
 
-We show and save plots with the species only as title. We save them in sub folder [`./data/output/GAM_outputs/short_title`](https://github.com/damianooldoni/euroraccoon-prototype/tree/main/data/output/GAM_outputs/short_title).
+We show and save plots with the species only as title. We save them in sub folder [`./data/output/GAM_outputs/short_title`](https://github.com/b-cubed-eu/raccoon/tree/main/data/output/GAM_outputs/short_title).
 
 #### Occurrences
 
@@ -415,7 +415,7 @@ purrr::iwalk(gam_ncells, function(x, country) {
 
 ### Grid
 
-For each country, we can show the plots of the number of occurrences and the measured occupancy next to each other. Plots saved in subfolder [`./data/output/GAM_outputs/plots_for_countries`](https://github.com/damianooldoni/euroraccoon-prototype/tree/main/data/output/GAM_outputs/plots_for_countries).
+For each country, we can show the plots of the number of occurrences and the measured occupancy next to each other. Plots saved in subfolder [`./data/output/GAM_outputs/plots_for_countries`](https://github.com/b-cubed-eu/raccoon/tree/main/data/output/GAM_outputs/plots_for_countries).
 
 ```{r grid_per_country}
 # Transform gam_occs and gam_ncells into a list of lists 
