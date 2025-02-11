@@ -40,6 +40,7 @@ library(tidyr)
 library(purrr)
 library(tibble)
 library(trias)
+library(countrycode)
 ```
 
 ## Scope
@@ -126,13 +127,22 @@ cube <- cube |>
   dplyr::filter(!is.na(eeacellcode))
 ```
 
-Extract countries:
+Extract country codes:
 
 ```{r extract_countries}
 countrycode <- cube |>
   dplyr::distinct(countrycode) |>
   dplyr::pull(countrycode)
 countrycode
+```
+
+Get country names from country codes:
+
+```{r country_names}
+countries <- tibble::tibble(
+  countrycode = countrycode) |>
+  dplyr::mutate(country_name = countrycode::countrycode(countrycode, "iso2c", "country.name"))
+countries
 ```
 
 ## From cubes to emerging status
