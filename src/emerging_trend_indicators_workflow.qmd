@@ -265,7 +265,7 @@ compact_df_ts <- df_ts |>
       .groups = "drop")
 ```
 
-Plots will be saved in `./data/output/GAM_outputs` directory:
+All plots will be saved in subdirectories of `./data/output/GAM_outputs`:
 
 ```{r root-output-gam}
 dir_name_basic <- here::here("data", "output", "GAM_outputs")
@@ -292,13 +292,13 @@ gam_occs <- purrr::map(
           df = df_key,
           y_var = "occs",
           taxonKey = "specieskey",
-          eval_years = 2023,
+          eval_years = 2024,
           type_indicator = "observations",
           taxon_key = t,
           name = n,
           df_title = code,
-          dir_name = dir_name_basic,
-          y_label = "observations",
+          dir_name = paste0(dir_name_basic, "/long_titles"),
+          y_label = "number of observations",
           saveplot = TRUE,
           width = plot_dimensions$width,
           height = plot_dimensions$height
@@ -326,12 +326,12 @@ gam_ncells <- purrr::map(
           df = df_key,
           y_var = "ncells",
           taxonKey = "specieskey",
-          eval_years = 2023,
+          eval_years = 2024,
           type_indicator = "occupancy",
           taxon_key = t,
           name = n,
           df_title = code,
-          dir_name = dir_name_basic,
+          dir_name = paste0(dir_name_basic, "/long_titles"),
           y_label = "number of occupied cells",
           saveplot = TRUE,
           width = plot_dimensions$width,
@@ -351,7 +351,7 @@ Please go to [`./data/output/GAM_outputs`](https://github.com/b-cubed-eu/eurorac
 
 ### Standard plots
 
-In this section we show the plots as returned by `apply_gam()`. Folder: [`./data/output/GAM_outputs`](https://github.com/b-cubed-eu/raccoon/tree/main/data/output/GAM_outputs).
+In this section we show the plots as returned by `apply_gam()`. Plot titles could be quite long. Folder: [`./data/output/GAM_outputs/long_titles`](https://github.com/b-cubed-eu/raccoon/tree/main/data/output/GAM_outputs).
 
 #### Occurrences
 
@@ -387,7 +387,7 @@ purrr::iwalk(gam_occs, function(x, country) {
         "output",
         "GAM_outputs",
         "short_title",
-        paste0(sp, "_", country, "_occurrences_short_title.png")),
+        paste0("occurrences_", sp, "_", country, ".png")),
       plot = y$plot,
       width = plot_dimensions$width,
       height = plot_dimensions$height,
@@ -412,7 +412,7 @@ purrr::iwalk(gam_ncells, function(x, country) {
         "output",
         "GAM_outputs",
         "short_title",
-        paste0(sp, "_", country, "_occupancy_short_title.png")),
+        paste0("occupancy_", sp, "_", country, ".png")),
       plot = y$plot,
       width = plot_dimensions$width,
       height = plot_dimensions$height,
@@ -425,7 +425,7 @@ purrr::iwalk(gam_ncells, function(x, country) {
 
 ### Grid
 
-For each country, we can show the plots of the number of occurrences and the measured occupancy next to each other. Plots saved in subfolder [`./data/output/GAM_outputs/plots_for_countries`](https://github.com/b-cubed-eu/raccoon/tree/main/data/output/GAM_outputs/plots_for_countries).
+For each country, we can show the plots of the number of occurrences and the measured occupancy next to each other. We use the full country name. Plots are saved in subfolder [`./data/output/GAM_outputs/plots_for_countries`](https://github.com/b-cubed-eu/raccoon/tree/main/data/output/GAM_outputs/plots_for_countries).
 
 ```{r grid_per_country}
 # Transform gam_occs and gam_ncells into a list of lists 
@@ -449,11 +449,16 @@ purrr::walk2(
       # Remove title
       x$occurrences$plot <- x$occurrences$plot + ggplot2::ggtitle(NULL)
       x$ncells$plot <- x$ncells$plot + ggplot2::ggtitle(NULL)
-      p <- patchwork::wrap_plots(x$occurrences$plot, x$ncells$plot, nrow = 1, ncol = 2) +
+      p <- patchwork::wrap_plots(x$occurrences$plot,
+                                 x$ncells$plot,
+                                 nrow = 1,
+                                 ncol = 2) +
         # Unify legends
         patchwork::plot_layout(guides = 'collect') + 
         # Add general title
-        patchwork::plot_annotation(title = code)
+        patchwork::plot_annotation(
+          title = countries$country_name[countries$countrycode == code]
+        )
       ggplot2::ggsave(
         filename = here::here(
           "data",
