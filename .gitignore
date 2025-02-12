@@ -45,7 +45,7 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
-docs/
+/docs/
 
 # Quarto hidden files and rendering via GitHub actions
 /.quarto/
