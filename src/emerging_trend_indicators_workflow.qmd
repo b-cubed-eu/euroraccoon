@@ -3,8 +3,10 @@ title: "Emerging trend indicators of raccoon in Europe"
 editor: visual
 project:
   type: website
-  output-dir: docs
+  output-dir: _site
   execute-dir: project
+  render:
+    - src/emerging_trend_indicators_workflow.qmd: index.html
 format:
   html:
     df-print: paged
@@ -21,6 +23,11 @@ execute:
   error: false
   include: true
 from: markdown+emoji
+website:
+  title: "Emerging trend indicators of raccoon in Europe"
+  repo-url: https://github.com/b-cubed-eu/euroraccoon
+  repo-actions: [edit, issue]
+  page-navigation: true
 ---
 
 ## Introduction
