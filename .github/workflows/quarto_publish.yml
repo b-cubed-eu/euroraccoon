@@ -25,24 +25,13 @@ jobs:
           r-version: '4.2.0'
 
       - name: Install R Dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
+        uses: r-lib/actions/setup-renv@v2
         with:
-          packages:
-            any::rmarkdown
-            any::readr
-            any::here
-            any::dplyr
-            any::patchwork
-            any::tidyr
-            any::purrr
-            any::tibble
-            any::countrycode
-            github::trias-project/trias
+          cache-version: 1
 
-      - name: Render Quarto Document
-        uses: quarto-dev/quarto-actions/render@v2
-
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Render and Publish
+        uses: quarto-dev/quarto-actions/publish@v2
         with:
-          folder: _site
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
