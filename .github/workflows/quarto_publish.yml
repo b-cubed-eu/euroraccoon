@@ -36,8 +36,8 @@ jobs:
             any::tidyr
             any::purrr
             any::tibble
-            any::trias
             any::countrycode
+            github::trias-project/trias
 
       - name: Render Quarto Document
         uses: quarto-dev/quarto-actions/render@v2
