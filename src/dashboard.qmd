@@ -1,0 +1,23 @@
+---
+title: "Static Dropdown for PNGs"
+format: html
+---
+
+## Select an Image
+
+<label for="imageSelector">Choose an image:</label>
+<select id="imageSelector">
+  <option value="data/output/GAM_outputs/plots_for_countries/AT_grid.png">Image 1</option>
+  <option value="data/output/GAM_outputs/plots_for_countries/BE_grid.png">Image 2</option>
+  <option value="data/output/GAM_outputs/plots_for_countries/CH_grid.png">Image 3</option>
+</select>
+
+<div>
+  <img id="displayImage" src="data/output/GAM_outputs/plots_for_countries/BE_grid.png" alt="Selected Image" style="max-width: 100%; border: 1px solid #ccc; margin-top: 10px;">
+</div>
+
+<script>
+  document.getElementById("imageSelector").addEventListener("change", function() {
+    document.getElementById("displayImage").src = this.value;
+  });
+</script>
