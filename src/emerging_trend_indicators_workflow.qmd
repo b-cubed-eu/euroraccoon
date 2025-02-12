@@ -84,12 +84,12 @@ Preview:
 head(cube)
 ```
 
-Notice the presence of column `countrycode` as we grouped by country. If a grid cell falls in multiple countries, it will be repeated for each country. It happens few times:
+Notice the presence of column `countrycode` as we grouped by country. It can happen that an occurrence is assigned to a cell in another country or a cell on the border of two different countries It happens few times:
 
 ```{r cells_with_multiple_countries}
 cube |>
-  dplyr::distinct(eeacellcode, countrycode) |>
-  dplyr::add_count(eeacellcode) |>
+  dplyr::distinct(eeacellcode, countrycode, year) |>
+  dplyr::add_count(eeacellcode, year) |>
   dplyr::filter(n > 1) |>
   dplyr::arrange(eeacellcode)
 ```
@@ -113,7 +113,7 @@ cube <- cube |>
   dplyr::filter(!countrycode %in% c("UA", "RU", "AZ"))
 ```
 
-Are there rows without an EEA cell code?
+Are there rows without `eeacellcode`?
 
 ```{r are_there_nas_cellcode}
 cube |>
@@ -144,16 +144,52 @@ countries <- tibble::tibble(
   dplyr::mutate(country_name = countrycode::countrycode(countrycode, "iso2c", "country.name"))
 countries
 ```
+We add `"Europe"` to the list of country names and codes. We use `"Europe"` as "country code": the abbreviation EU would be confusing as it is the acronym of the European Union:
+
+```{r add_europe_country}
+countries <- countries |>
+  dplyr::add_row(countrycode = "Europe", country_name = "Europe")
+countrycode <- c(countrycode, "Europe")
+```
+
+So, from now on, when we refer to "country", we also mean "Europe".
+
+We calculate the cube for Europe:
+
+```{r}
+cube_europe <- cube |>
+  group_by(specieskey, species, year, eeacellcode) |>
+  summarise(
+    countrycode = "Europe",
+    occurrences = sum(occurrences),
+    class = unique(class),
+    classkey = unique(classkey),
+    mincoordinateuncertaintyinmeters = min(mincoordinateuncertaintyinmeters),
+    mintemporaluncertainty = min(mintemporaluncertainty),
+    classcount = unique(classcount),
+    .groups = "drop") %>%
+  # order columns as in the original cube
+  dplyr::select(
+    dplyr::all_of(names(cube))
+  )
+head(cube_europe)
+```
+
+And we add it to `cube`:
+
+```{r add_europe_to_cube}
+cube <- dplyr::bind_rows(cube, cube_europe)
+```
 
 ## From cubes to emerging status
 
-### Preprocess: from cube to time series
-
-We assess the emerging status of the species in Europe for 2024. First, we create time series up to 2024.
+We assess the emerging status of the species at country level and in all Europe for 2024. We first have to create time series up to 2024.
 
 ```{r}
 last_year <- 2024
 ```
+
+### Preprocess: from cube to time series
 
 For each country, define cells with at least one observation:
 
@@ -189,7 +225,7 @@ head(df_cc)
 
 For each cell (`eeacellcode`), country (`countrycode`) and species (`specieskey`) we can now create a time series:
 
-```{r}
+```{r Create_timeseries_slots}
 # Define help function
 make_time_series <- function(eeacellcode, countrycode, specieskey, begin_year, last_year) {
   tidyr::expand_grid(
@@ -228,7 +264,7 @@ df_ts <-
 
 Add column for presence (1) or absence (0):
 
-```{r}
+```{r presence_absence}
 df_ts <-
   df_ts |>
   dplyr::mutate(
@@ -236,9 +272,9 @@ df_ts <-
   )
 ```
 
-Save the time series as an interim output:
+Save the time series at country level as an interim output, `time_series.tsv` in directory `data/interim`:
 
-```{r save-time-series, message: false}
+```{r save-time-series}
 readr::write_tsv(
   df_ts,
   here::here("data", "interim", "time_series.tsv"),
