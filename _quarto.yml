@@ -1,16 +1,20 @@
 project:
   type: website
   output-dir: docs
-
+  execute-dir: project
 website:
-  title: "Emerging Trend Indicators for raccoon in Europe"
+  title: "Emerging trends for raccoon in Europe"
   navbar:
+    logo: images/assets/b3-logo.png
     left:
-      - href: dashboard.qmd
+      - href: index.qmd
         text: Home
-      - href: emerging_trend_indicators_workflow.qmd
-        text: About the plots
+      - href: src/dashboard.qmd
+        text: Dashboard
+      - href: src/about_data.qmd
+        text: About the Data
 format:
   html:
-    theme: cosmo
-    toc: true
+    theme: flatly
+execute:
+  freeze: auto
