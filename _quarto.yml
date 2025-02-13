@@ -1,3 +1,20 @@
 project:
   type: website
   output-dir: docs
+  execute-dir: project
+website:
+  title: "Emerging trends for raccoon in Europe"
+  navbar:
+    logo: images/assets/b3-logo.png
+    left:
+      - href: index.qmd
+        text: Home
+      - href: src/dashboard.qmd
+        text: Dashboard
+      - href: src/about_data.qmd
+        text: About the Data
+format:
+  html:
+    theme: flatly
+execute:
+  freeze: auto
