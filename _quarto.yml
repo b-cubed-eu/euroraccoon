@@ -13,6 +13,10 @@ website:
         text: Dashboard
       - href: src/about_data.qmd
         text: About the Data
+    right:
+      - icon: github
+        href: https://github.com/b-cubed-eu/euroraccoon
+        aria-label: "GitHub Repository"
 format:
   html:
     theme: flatly
