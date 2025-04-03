@@ -61,7 +61,7 @@ We request a species occurrence cube based on data from **1950**.
 
 ## Species occurrence cube
 
-We triggered a GBIF occurrence cube via the [Occurrence SQL Download API](https://techdocs.gbif.org/en/data-use/api-sql-downloads) and on the hand of a JSON query ([query_cube_raccoon.json](../../data/input/query_cube_raccoon.json)). The resulting cube (DOI: [10.15468/dl.mmnusj](https://doi.org/10.15468/dl.mmnusj), `downloadKey`: 0023024-250127130748423) can be downloaded in TSV format from GBIF. We have it saved at `data/input` as [`0023024-250127130748423.csv`](../../data/input/0023024-250127130748423.csv):
+We triggered a GBIF occurrence cube via the [Occurrence SQL Download API](https://techdocs.gbif.org/en/data-use/api-sql-downloads) and on the hand of a JSON query ([query_cube_raccoon.json](https://github.com/b-cubed-eu/euroraccoon/blob/main/data/input/query_cube_raccoon.json)). The resulting cube (DOI: [10.15468/dl.mmnusj](https://doi.org/10.15468/dl.mmnusj), `downloadKey`: 0023024-250127130748423) can be downloaded in TSV format from GBIF. We have it saved at `data/input` as [`0023024-250127130748423.csv`](https://github.com/b-cubed-eu/euroraccoon/blob/main/data/input/0023024-250127130748423.csv):
 
 ```{r read-cube, message=FALSE}
 cube <- readr::read_tsv(
